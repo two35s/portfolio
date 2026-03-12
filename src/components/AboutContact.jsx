@@ -35,17 +35,17 @@ const AboutContact = () => {
                                 falloff='linear'
                             />
                         </h2>
-                        <a href="mailto:hello@example.com" className="email-link">
-                            hello@example.com
+                        <a href="mailto:youssefbaaziz2077@gmail.com" className="email-link">
+                            youssefbaaziz2077@gmail.com
                         </a>
                     </div>
 
                     <div className="footer-bottom">
                         <div className="social-links">
-                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram size={24} /></a>
-                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><Twitter size={24} /></a>
+                            <a href="https://github.com/two35s" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Instagram size={24} /></a>
+                            <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X"><Twitter size={24} /></a>
                             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin size={24} /></a>
-                            <a href="mailto:hello@example.com" aria-label="Email"><Mail size={24} /></a>
+                            <a href="mailto:youssefbaaziz2077@gmail.com" aria-label="Email"><Mail size={24} /></a>
                         </div>
                         <p className="copyright">&copy; {new Date().getFullYear()} Y/B Design. All rights reserved. <Link to="/admin" style={{ opacity: 0.2, fontSize: '0.7rem', textDecoration: 'none', color: 'inherit' }}>admin</Link></p>
                     </div>

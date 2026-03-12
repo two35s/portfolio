@@ -42,6 +42,14 @@ const ProjectDetail = () => {
         navigator.clipboard.writeText(window.location.href).catch(() => {});
     };
 
+    const handleShare = async () => {
+        if (navigator.share) {
+            await navigator.share({ title: project?.title, url: window.location.href }).catch(() => {});
+        } else {
+            handleCopyLink();
+        }
+    };
+
     if (loading) {
         return (
             <main className="project-detail-page">
@@ -90,7 +98,7 @@ const ProjectDetail = () => {
                         <button onClick={handleCopyLink} className="pd-action-btn">
                             <Link2 size={14} /> Copy link
                         </button>
-                        <button onClick={handleCopyLink} className="pd-action-btn">
+                        <button onClick={handleShare} className="pd-action-btn">
                             <Share2 size={14} /> Share
                         </button>
                         <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="pd-action-btn">
@@ -116,7 +124,7 @@ const ProjectDetail = () => {
                             <Calendar size={14} /> {formatDate(project.created_at || new Date().toISOString())}
                         </span>
                         <span className="pd-meta-item">
-                            <Star size={14} /> {project.id || 3}
+                            <Star size={14} /> {project.category}
                         </span>
                         <span className="pd-meta-item">
                             Updated {formatDate(project.updated_at, 'short') || 'Dec 2025'}
@@ -142,26 +150,11 @@ const ProjectDetail = () => {
                         <p className="pd-intro">{project.description}</p>
                     )}
 
-                    <div className="pd-hero">
-                        <img src={project.image_url} alt={project.title} className="pd-hero-image" />
-                    </div>
-
-                    {/* Extended Content Placeholder */}
-                    <div className="pd-extended">
-                        <p className="pd-body-text">
-                            This project showcases modern full-stack development, integrating complex systems with a robust backend architecture. It highlights scalable design patterns, rigorous testing, and seamless continuous integration. Performance optimizations and accessibility considerations were paramount during the development lifecycle.
-                        </p>
-                        <h3>Key Features</h3>
-                        <ul className="pd-list">
-                            <li><strong>Architecture:</strong> Scalable and modular component design for maintainability.</li>
-                            <li><strong>Performance:</strong> Optimized asset delivery and lazy loading implementation.</li>
-                            <li><strong>Integration:</strong> Seamless interaction with third-party APIs and services.</li>
-                        </ul>
-                        <h3>Deployment Snapshot</h3>
-                        <p className="pd-body-text">
-                            The application is currently deployed and serving traffic with high availability. Monitoring and logging are in place to ensure rapid response to any anomalies.
-                        </p>
-                    </div>
+                    {project.image_url && (
+                        <div className="pd-hero">
+                            <img src={project.image_url} alt={project.title} className="pd-hero-image" />
+                        </div>
+                    )}
                 </article>
             </div>
         </main>

@@ -194,48 +194,6 @@
     display: block;
 }
 
-.pd-extended {
-    max-width: 800px;
-}
-
-.pd-extended h3 {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    margin: 2.5rem 0 1rem 0;
-}
-
-.pd-body-text {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-}
-
-.pd-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 2rem 0;
-}
-
-.pd-list li {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: flex-start;
-}
-
-.pd-list li::before {
-    content: '•';
-    color: var(--accent);
-    margin-right: 0.75rem;
-}
-
-.pd-list strong {
-    color: var(--text-primary);
-    margin-right: 0.25rem;
-}
-
 /* Loading & Error */
 .loading, .error {
     text-align: center;

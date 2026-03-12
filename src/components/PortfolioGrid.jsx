@@ -33,8 +33,6 @@ const PortfolioGrid = () => {
         fetchProjects();
     }, [activeFilter]);
 
-    const filteredProjects = projects;
-
     const formatDate = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString);
@@ -68,7 +66,7 @@ const PortfolioGrid = () => {
 
                 {!loading && !error && (
                     <div className="portfolio-grid">
-                        {filteredProjects.map((project) => {
+                        {projects.map((project) => {
                             const tags = parseTechnologies(project.technologies);
                             const displayTags = tags.slice(0, 3);
                             const extraTagsCount = tags.length > 3 ? tags.length - 3 : 0;
@@ -94,7 +92,7 @@ const PortfolioGrid = () => {
 
                                         <div className="project-footer">
                                             <div className="project-meta">
-                                                <span className="meta-item"><Star size={14} fill="currentColor" /> {project.id || 1}</span>
+                                                <span className="meta-item"><Star size={14} fill="currentColor" /> {project.category}</span>
                                                 <span className="meta-item">Updated {formatDate(project.updated_at) || 'Dec 2025'}</span>
                                             </div>
                                             <span className="project-view-btn">
