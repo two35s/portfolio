@@ -120,15 +120,19 @@ const ProjectDetail = () => {
                     <h1 className="pd-title">{project.title}</h1>
                     
                     <div className="pd-meta">
-                        <span className="pd-meta-item">
-                            <Calendar size={14} /> {formatDate(project.created_at || new Date().toISOString())}
-                        </span>
+                        {project.created_at && (
+                            <span className="pd-meta-item">
+                                <Calendar size={14} /> {formatDate(project.created_at)}
+                            </span>
+                        )}
                         <span className="pd-meta-item">
                             <Star size={14} /> {project.category}
                         </span>
-                        <span className="pd-meta-item">
-                            Updated {formatDate(project.updated_at, 'short') || 'Dec 2025'}
-                        </span>
+                        {project.updated_at && (
+                            <span className="pd-meta-item">
+                                Updated {formatDate(project.updated_at, 'short')}
+                            </span>
+                        )}
                     </div>
 
                     <div className="pd-technologies">

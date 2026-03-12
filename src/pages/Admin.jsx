@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase, parseTechnologies } from '../lib/supabase';
 import { LogOut, Plus, Pencil, Trash2, Save, X, Loader2 } from 'lucide-react';
 import './Admin.css';
@@ -14,6 +14,8 @@ const EMPTY_PROJECT = {
   live_link: '',
   github_link: '',
 };
+
+const fetchAllProjects = () => supabase.from('projects').select('*').order('id');
 
 const Admin = () => {
   const [session, setSession] = useState(null);
@@ -38,17 +40,17 @@ const Admin = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const fetchProjects = useCallback(async () => {
+  const refreshProjects = async () => {
     setLoading(true);
-    const { data, error } = await supabase.from('projects').select('*').order('id');
+    const { data, error } = await fetchAllProjects();
     if (!error) setProjects(data || []);
     setLoading(false);
-  }, []);
+  };
 
   useEffect(() => {
     if (!session) return;
     let cancelled = false;
-    supabase.from('projects').select('*').order('id').then(({ data, error }) => {
+    fetchAllProjects().then(({ data, error }) => {
       if (cancelled) return;
       if (!error) setProjects(data || []);
       setLoading(false);
@@ -125,7 +127,7 @@ const Admin = () => {
     } else {
       showFeedback(editing === 'new' ? 'Project created!' : 'Project updated!');
       cancelEdit();
-      fetchProjects();
+      refreshProjects();
     }
   };
 
@@ -138,7 +140,7 @@ const Admin = () => {
       showFeedback(`Error: ${error.message}`);
     } else {
       showFeedback('Project deleted.');
-      fetchProjects();
+      refreshProjects();
     }
   };
 

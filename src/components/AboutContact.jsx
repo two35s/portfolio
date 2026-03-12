@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Instagram, Twitter, Linkedin } from 'lucide-react';
+import { Mail, Github, Linkedin } from 'lucide-react';
 import VariableProximity from './VariableProximity';
 import './AboutContact.css';
 
@@ -42,8 +42,7 @@ const AboutContact = () => {
 
                     <div className="footer-bottom">
                         <div className="social-links">
-                            <a href="https://github.com/two35s" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Instagram size={24} /></a>
-                            <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X"><Twitter size={24} /></a>
+                            <a href="https://github.com/two35s" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github size={24} /></a>
                             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin size={24} /></a>
                             <a href="mailto:youssefbaaziz2077@gmail.com" aria-label="Email"><Mail size={24} /></a>
                         </div>

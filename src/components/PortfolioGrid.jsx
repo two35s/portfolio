@@ -93,7 +93,7 @@ const PortfolioGrid = () => {
                                         <div className="project-footer">
                                             <div className="project-meta">
                                                 <span className="meta-item"><Star size={14} fill="currentColor" /> {project.category}</span>
-                                                <span className="meta-item">Updated {formatDate(project.updated_at) || 'Dec 2025'}</span>
+                                                {project.updated_at && <span className="meta-item">Updated {formatDate(project.updated_at)}</span>}
                                             </div>
                                             <span className="project-view-btn">
                                                 View Project <ExternalLink size={14} />

@@ -159,7 +159,7 @@
 }
 
 .pd-tech-tag.extra {
-    color: #4da6ff; /* A subtle blue to match the reference 'more' text */
+    color: var(--accent);
     background: transparent;
     padding-left: 0;
     font-weight: 500;
