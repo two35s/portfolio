@@ -68,8 +68,12 @@ const Admin = () => {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut({ scope: 'local' });
+    if (error) {
+      showFeedback(`Logout error: ${error.message}`);
+    }
     setSession(null);
+    setProjects([]);
   };
 
   const showFeedback = (msg) => {

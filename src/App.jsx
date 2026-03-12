@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CursorifyProvider } from '@cursorify/react';
 import { PhingerCursor } from '@cursorify/cursors';
 import Header from './components/Header';
@@ -11,6 +11,33 @@ const Projects = lazy(() => import('./pages/Projects'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
 const AboutContact = lazy(() => import('./components/AboutContact'));
 const Admin = lazy(() => import('./pages/Admin'));
+
+function AppContent({ theme, toggleTheme }) {
+  const location = useLocation();
+  const isAdmin = location.pathname === '/admin';
+  const sparkColor = theme === 'dark' ? '#d4ff36' : '#9bbf00';
+
+  return (
+    <ClickSpark sparkColor={sparkColor} sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
+      <div className="app">
+        {!isAdmin && <Header theme={theme} toggleTheme={toggleTheme} />}
+        <Suspense fallback={<main className="route-loading container">Loading...</main>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:id" element={<ProjectDetail />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </Suspense>
+        {!isAdmin && (
+          <Suspense fallback={null}>
+            <AboutContact />
+          </Suspense>
+        )}
+      </div>
+    </ClickSpark>
+  );
+}
 
 function App() {
   const [theme, setTheme] = useState(() => {
@@ -26,28 +53,11 @@ function App() {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
 
-  const sparkColor = theme === 'dark' ? '#d4ff36' : '#9bbf00';
-
   return (
     <CursorifyProvider cursor={<PhingerCursor />}>
-      <ClickSpark sparkColor={sparkColor} sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
-        <Router>
-          <div className="app">
-            <Header theme={theme} toggleTheme={toggleTheme} />
-            <Suspense fallback={<main className="route-loading container">Loading...</main>}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/projects/:id" element={<ProjectDetail />} />
-                <Route path="/admin" element={<Admin />} />
-              </Routes>
-            </Suspense>
-            <Suspense fallback={null}>
-              <AboutContact />
-            </Suspense>
-          </div>
-        </Router>
-      </ClickSpark>
+      <Router>
+        <AppContent theme={theme} toggleTheme={toggleTheme} />
+      </Router>
     </CursorifyProvider>
   );
 }
