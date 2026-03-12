@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ExternalLink } from 'lucide-react';
-import { buildApiUrl } from '../lib/api';
+import { supabase } from '../lib/supabase';
 import './PortfolioGrid.css';
 
 const PortfolioGrid = () => {
@@ -15,19 +15,16 @@ const PortfolioGrid = () => {
             setLoading(true);
             setError('');
             try {
-                const url = activeFilter === 'ALL'
-                    ? buildApiUrl('/projects')
-                    : `${buildApiUrl('/projects')}?filter=${encodeURIComponent(activeFilter)}`;
-
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error('Failed to load projects');
+                let query = supabase.from('projects').select('*').order('id', { ascending: true });
+                if (activeFilter !== 'ALL') {
+                    query = query.eq('filter_type', activeFilter);
                 }
-                const data = await response.json();
-                setProjects(Array.isArray(data) ? data : []);
+                const { data, error: dbError } = await query;
+                if (dbError) throw dbError;
+                setProjects(data || []);
             } catch (err) {
                 setProjects([]);
-                setError(err instanceof Error ? err.message : 'Failed to load projects');
+                setError(err.message || 'Failed to load projects');
             } finally {
                 setLoading(false);
             }

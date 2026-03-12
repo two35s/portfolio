@@ -12,15 +12,8 @@ export default defineConfig({
           three: ['three'],
           postfx: ['postprocessing'],
           ui: ['lucide-react', '@cursorify/react', '@cursorify/cursors'],
+          supabase: ['@supabase/supabase-js'],
         },
-      },
-    },
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target: process.env.VITE_API_PROXY_TARGET || 'http://localhost:3001',
-        changeOrigin: true,
       },
     },
   },

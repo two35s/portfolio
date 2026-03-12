@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Star, Link2, Share2, Code2 } from 'lucide-react';
-import { buildApiUrl } from '../lib/api';
+import { supabase } from '../lib/supabase';
 import './ProjectDetail.css';
 
 const ProjectDetail = () => {
@@ -13,11 +13,12 @@ const ProjectDetail = () => {
     useEffect(() => {
         const fetchProject = async () => {
             try {
-                const response = await fetch(buildApiUrl(`/projects/${id}`));
-                if (!response.ok) {
-                    throw new Error('Failed to fetch project');
-                }
-                const data = await response.json();
+                const { data, error: dbError } = await supabase
+                    .from('projects')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+                if (dbError) throw dbError;
                 setProject(data);
             } catch (err) {
                 setError(err.message);

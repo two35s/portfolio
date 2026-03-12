@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, Instagram, Twitter, Linkedin } from 'lucide-react';
 import VariableProximity from './VariableProximity';
 import './AboutContact.css';
@@ -46,7 +47,7 @@ const AboutContact = () => {
                             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin size={24} /></a>
                             <a href="mailto:hello@example.com" aria-label="Email"><Mail size={24} /></a>
                         </div>
-                        <p className="copyright">&copy; {new Date().getFullYear()} Y/B Design. All rights reserved.</p>
+                        <p className="copyright">&copy; {new Date().getFullYear()} Y/B Design. All rights reserved. <Link to="/admin" style={{ opacity: 0.2, fontSize: '0.7rem', textDecoration: 'none', color: 'inherit' }}>admin</Link></p>
                     </div>
                 </div>
             </footer>

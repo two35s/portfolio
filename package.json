@@ -13,6 +13,7 @@
   "dependencies": {
     "@cursorify/cursors": "^0.0.39",
     "@cursorify/react": "^0.0.43",
+    "@supabase/supabase-js": "^2.99.1",
     "lucide-react": "^0.577.0",
     "postprocessing": "^6.38.3",
     "react": "^19.2.0",

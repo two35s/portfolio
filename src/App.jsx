@@ -10,6 +10,7 @@ const Home = lazy(() => import('./pages/Home'));
 const Projects = lazy(() => import('./pages/Projects'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
 const AboutContact = lazy(() => import('./components/AboutContact'));
+const Admin = lazy(() => import('./pages/Admin'));
 
 function App() {
   const [theme, setTheme] = useState(() => {
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/projects/:id" element={<ProjectDetail />} />
+                <Route path="/admin" element={<Admin />} />
               </Routes>
             </Suspense>
             <Suspense fallback={null}>
