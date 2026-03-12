@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Star, ExternalLink } from 'lucide-react';
+import { Star, ExternalLink } from 'lucide-react';
+import { buildApiUrl } from '../lib/api';
 import './PortfolioGrid.css';
 
 const PortfolioGrid = () => {
     const [activeFilter, setActiveFilter] = useState('ALL');
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchProjects = async () => {
+            setLoading(true);
+            setError('');
             try {
                 const url = activeFilter === 'ALL'
-                    ? 'http://localhost:5000/api/projects'
-                    : `http://localhost:5000/api/projects?filter=${activeFilter}`;
-                
+                    ? buildApiUrl('/projects')
+                    : `${buildApiUrl('/projects')}?filter=${encodeURIComponent(activeFilter)}`;
+
                 const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Failed to load projects');
+                }
                 const data = await response.json();
-                setProjects(data);
+                setProjects(Array.isArray(data) ? data : []);
             } catch (err) {
-                console.error('Error fetching projects:', err);
+                setProjects([]);
+                setError(err instanceof Error ? err.message : 'Failed to load projects');
             } finally {
                 setLoading(false);
             }
@@ -58,45 +66,50 @@ const PortfolioGrid = () => {
                     </div>
                 </div>
 
-                <div className="portfolio-grid">
-                    {filteredProjects.map((project) => {
-                        const tags = project.technologies || [];
-                        const displayTags = tags.slice(0, 3);
-                        const extraTagsCount = tags.length > 3 ? tags.length - 3 : 0;
+                {loading && <p className="portfolio-status">Loading projects...</p>}
+                {error && <p className="portfolio-status error">{error}</p>}
 
-                        return (
-                            <Link key={project.id} to={`/projects/${project.id}`} className="project-card">
-                                <div className="project-image-wrapper">
-                                    <img src={project.image_url} alt={project.title} loading="lazy" />
-                                </div>
-                                <div className="project-content">
-                                    <h3 className="project-title">{project.title}</h3>
-                                    
-                                    <div className="project-tags">
-                                        {displayTags.map((tag, idx) => (
-                                            <span key={idx} className="project-tag">{tag}</span>
-                                        ))}
-                                        {extraTagsCount > 0 && (
-                                            <span className="project-tag extra">+{extraTagsCount}</span>
-                                        )}
+                {!loading && !error && (
+                    <div className="portfolio-grid">
+                        {filteredProjects.map((project) => {
+                            const tags = project.technologies || [];
+                            const displayTags = tags.slice(0, 3);
+                            const extraTagsCount = tags.length > 3 ? tags.length - 3 : 0;
+
+                            return (
+                                <Link key={project.id} to={`/projects/${project.id}`} className="project-card">
+                                    <div className="project-image-wrapper">
+                                        <img src={project.image_url} alt={project.title} loading="lazy" />
                                     </div>
-                                    
-                                    <p className="project-description">{project.description}</p>
-                                    
-                                    <div className="project-footer">
-                                        <div className="project-meta">
-                                            <span className="meta-item"><Star size={14} fill="currentColor" /> {project.id || 1}</span>
-                                            <span className="meta-item">Updated {formatDate(project.updated_at) || 'Dec 2025'}</span>
+                                    <div className="project-content">
+                                        <h3 className="project-title">{project.title}</h3>
+
+                                        <div className="project-tags">
+                                            {displayTags.map((tag, idx) => (
+                                                <span key={idx} className="project-tag">{tag}</span>
+                                            ))}
+                                            {extraTagsCount > 0 && (
+                                                <span className="project-tag extra">+{extraTagsCount}</span>
+                                            )}
                                         </div>
-                                        <button className="project-view-btn">
-                                            View Project <ExternalLink size={14} />
-                                        </button>
+
+                                        <p className="project-description">{project.description}</p>
+
+                                        <div className="project-footer">
+                                            <div className="project-meta">
+                                                <span className="meta-item"><Star size={14} fill="currentColor" /> {project.id || 1}</span>
+                                                <span className="meta-item">Updated {formatDate(project.updated_at) || 'Dec 2025'}</span>
+                                            </div>
+                                            <span className="project-view-btn">
+                                                View Project <ExternalLink size={14} />
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        );
-                    })}
-                </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </section>
     );

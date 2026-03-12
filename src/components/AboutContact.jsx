@@ -41,10 +41,10 @@ const AboutContact = () => {
 
                     <div className="footer-bottom">
                         <div className="social-links">
-                            <a href="#" aria-label="Instagram"><Instagram size={24} /></a>
-                            <a href="#" aria-label="Twitter"><Twitter size={24} /></a>
-                            <a href="#" aria-label="LinkedIn"><Linkedin size={24} /></a>
-                            <a href="#" aria-label="Email"><Mail size={24} /></a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram size={24} /></a>
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><Twitter size={24} /></a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin size={24} /></a>
+                            <a href="mailto:hello@example.com" aria-label="Email"><Mail size={24} /></a>
                         </div>
                         <p className="copyright">&copy; {new Date().getFullYear()} Y/B Design. All rights reserved.</p>
                     </div>

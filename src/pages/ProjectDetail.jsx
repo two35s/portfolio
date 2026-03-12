@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Star, Link2, Share2, Code2, Linkedin, Twitter } from 'lucide-react';
+import { ArrowLeft, Calendar, Star, Link2, Share2, Code2 } from 'lucide-react';
+import { buildApiUrl } from '../lib/api';
 import './ProjectDetail.css';
 
 const ProjectDetail = () => {
@@ -12,7 +13,7 @@ const ProjectDetail = () => {
     useEffect(() => {
         const fetchProject = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/projects/${id}`);
+                const response = await fetch(buildApiUrl(`/projects/${id}`));
                 if (!response.ok) {
                     throw new Error('Failed to fetch project');
                 }
@@ -37,8 +38,7 @@ const ProjectDetail = () => {
     };
 
     const handleCopyLink = () => {
-        navigator.clipboard.writeText(window.location.href);
-        alert('Link copied to clipboard!');
+        navigator.clipboard.writeText(window.location.href).catch(() => {});
     };
 
     if (loading) {
@@ -92,10 +92,10 @@ const ProjectDetail = () => {
                         <button onClick={handleCopyLink} className="pd-action-btn">
                             <Share2 size={14} /> Share
                         </button>
-                        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`} target="_blank" rel="noopener noreferrer" className="pd-action-btn">
+                        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="pd-action-btn">
                             LinkedIn
                         </a>
-                        <a href={`https://twitter.com/intent/tweet?url=${window.location.href}`} target="_blank" rel="noopener noreferrer" className="pd-action-btn">
+                        <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="pd-action-btn">
                             X
                         </a>
                     </div>

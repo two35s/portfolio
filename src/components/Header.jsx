@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { AnimatedThemeToggler } from './AnimatedThemeToggler';
 import './Header.css';
@@ -7,12 +7,6 @@ import './Header.css';
 const Header = ({ theme, toggleTheme }) => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const location = useLocation();
-
-    // Close menu when route changes
-    useEffect(() => {
-        setMobileMenuOpen(false);
-    }, [location]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -22,17 +16,25 @@ const Header = ({ theme, toggleTheme }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const scrollToSection = (sectionId) => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        setMobileMenuOpen(false);
+    };
+
     return (
         <header className={`header ${scrolled ? 'scrolled' : ''}`}>
             <div className="container header-content">
-                <Link to="/" className="logo">
+                <Link to="/" className="logo" onClick={() => setMobileMenuOpen(false)}>
                     Y/B<span className="dot">.</span>
                 </Link>
 
-                <nav className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
+                <nav id="primary-navigation" className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
                     <Link to="/projects" onClick={() => setMobileMenuOpen(false)}>Projects</Link>
-                    <a href={location.pathname === '/' ? '#about' : '/#about'} onClick={() => setMobileMenuOpen(false)}>About</a>
-                    <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="btn-primary-outline">Let's Talk</a>
+                    <button type="button" className="nav-scroll-btn" onClick={() => scrollToSection('about')}>About</button>
+                    <button type="button" className="nav-scroll-btn btn-primary-outline" onClick={() => scrollToSection('contact')}>Let's Talk</button>
                 </nav>
 
                 <div className="header-actions">
@@ -42,7 +44,14 @@ const Header = ({ theme, toggleTheme }) => {
                         className="theme-toggle" 
                     />
                     
-                    <button className="mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                    <button
+                        type="button"
+                        className="mobile-toggle"
+                        aria-expanded={mobileMenuOpen}
+                        aria-controls="primary-navigation"
+                        aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    >
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>

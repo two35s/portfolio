@@ -5,14 +5,22 @@ import './InteractiveHoverButton.css';
 export const InteractiveHoverButton = ({
   children,
   className = '',
-  as: Component = 'button',
+  as = 'button',
   ...props
 }) => {
-  return (
-    <Component
-      className={`interactive-hover-button ${className}`}
-      {...props}
-    >
+  const elementProps = {
+    className: `interactive-hover-button ${className}`.trim(),
+    ...props,
+  };
+
+  if (as === 'button' && !('type' in elementProps)) {
+    elementProps.type = 'button';
+  }
+
+  return React.createElement(
+    as,
+    elementProps,
+    <>
       <div className="ihb-container-1">
         <div className="ihb-dot"></div>
         <span className="ihb-text-1">{children}</span>
@@ -21,7 +29,7 @@ export const InteractiveHoverButton = ({
         <span>{children}</span>
         <ArrowRight size={20} />
       </div>
-    </Component>
+    </>,
   );
 };
 

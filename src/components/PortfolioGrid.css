@@ -61,6 +61,15 @@
     gap: 2rem;
 }
 
+.portfolio-status {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.portfolio-status.error {
+    color: var(--text-primary);
+}
+
 .project-card {
     display: flex;
     flex-direction: column;
@@ -194,7 +203,7 @@
     font-weight: 500;
     padding: 0.4rem 0.8rem;
     border-radius: 4px;
-    cursor: pointer;
+    cursor: default;
     transition: background var(--transition-fast);
 }
 

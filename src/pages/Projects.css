@@ -3,20 +3,10 @@
     padding-top: 150px;
 }
 
-.projects-header {
-    margin-bottom: 3rem;
-}
-
-.projects-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: var(--text-primary);
-    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
 .back-home-link {
     display: inline-block;
     margin-bottom: 0.8rem;
-    color: var(--text-accent);
+    color: var(--accent);
     text-decoration: none;
     font-size: 0.95rem;
     transition: all 0.3s ease;
@@ -24,7 +14,7 @@
 
 .back-home-link:hover {
     transform: translateX(-4px);
-    color: var(--accent-color);
+    color: var(--accent-hover);
 }
 
 @media (max-width: 768px) {

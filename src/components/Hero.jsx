@@ -5,6 +5,13 @@ import InteractiveHoverButton from './InteractiveHoverButton';
 import './Hero.css';
 
 const Hero = () => {
+    const scrollToContact = () => {
+        const section = document.getElementById('contact');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
     return (
         <section className="hero" id="home">
             <div className="container hero-container">
@@ -21,9 +28,9 @@ const Hero = () => {
                         <InteractiveHoverButton as={Link} to="/projects">
                             View Projects
                         </InteractiveHoverButton>
-                        <a href="#contact" className="btn-secondary">
+                        <button type="button" onClick={scrollToContact} className="btn-secondary">
                             Contact Me
-                        </a>
+                        </button>
                     </div>
                 </div>
 

@@ -319,14 +319,12 @@ const PixelBlast = ({
     rippleThickness = 0.1,
     rippleSpeed = 0.3,
     liquidWobbleSpeed = 4.5,
-    autoPauseOffscreen = true,
     speed = 0.5,
     transparent = true,
     edgeFade = 0.5,
     noiseAmount = 0
 }) => {
     const containerRef = useRef(null);
-    const visibilityRef = useRef({ visible: true });
     const speedRef = useRef(speed);
 
     const threeRef = useRef(null);
@@ -351,6 +349,8 @@ const PixelBlast = ({
                 const t = threeRef.current;
                 t.resizeObserver?.disconnect();
                 cancelAnimationFrame(t.raf);
+                t.renderer.domElement.removeEventListener('pointerdown', t.onPointerDown);
+                t.renderer.domElement.removeEventListener('pointermove', t.onPointerMove);
                 t.quad?.geometry.dispose();
                 t.material.dispose();
                 t.composer?.dispose();
@@ -497,10 +497,6 @@ const PixelBlast = ({
             });
             let raf = 0;
             const animate = () => {
-                if (autoPauseOffscreen && !visibilityRef.current.visible) {
-                    raf = requestAnimationFrame(animate);
-                    return;
-                }
                 uniforms.uTime.value = timeOffset + clock.getElapsedTime() * speedRef.current;
                 if (liquidEffect) liquidEffect.uniforms.get('uTime').value = uniforms.uTime.value;
                 if (composer) {
@@ -532,7 +528,9 @@ const PixelBlast = ({
                 timeOffset,
                 composer,
                 touch,
-                liquidEffect
+                liquidEffect,
+                onPointerDown,
+                onPointerMove
             };
         } else {
             const t = threeRef.current;
@@ -550,7 +548,7 @@ const PixelBlast = ({
             if (transparent) t.renderer.setClearAlpha(0);
             else t.renderer.setClearColor(0x000000, 1);
             if (t.liquidEffect) {
-                const uStrength = t.liquidEffect;
+                const uStrength = t.liquidEffect.uniforms.get('uStrength');
                 if (uStrength) uStrength.value = liquidStrength;
                 const uFreq = t.liquidEffect.uniforms.get('uFreq');
                 if (uFreq) uFreq.value = liquidWobbleSpeed;
@@ -559,11 +557,12 @@ const PixelBlast = ({
         }
         prevConfigRef.current = cfg;
         return () => {
-            if (threeRef.current && mustReinit) return;
             if (!threeRef.current) return;
             const t = threeRef.current;
             t.resizeObserver?.disconnect();
             cancelAnimationFrame(t.raf);
+            t.renderer.domElement.removeEventListener('pointerdown', t.onPointerDown);
+            t.renderer.domElement.removeEventListener('pointermove', t.onPointerMove);
             t.quad?.geometry.dispose();
             t.material.dispose();
             t.composer?.dispose();
@@ -588,7 +587,6 @@ const PixelBlast = ({
         liquidStrength,
         liquidRadius,
         liquidWobbleSpeed,
-        autoPauseOffscreen,
         variant,
         color,
         speed

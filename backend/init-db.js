@@ -17,12 +17,27 @@ const createTableQuery = `
   );
 `;
 
+const dedupeTitlesQuery = `
+  DELETE FROM projects p1
+  USING projects p2
+  WHERE p1.id < p2.id
+    AND p1.title = p2.title;
+`;
+
+const createUniqueIndexQuery = `
+  CREATE UNIQUE INDEX IF NOT EXISTS projects_title_unique_idx
+  ON projects (title);
+`;
+
 async function initDatabase() {
   try {
     console.log('Creating projects table...');
     await pool.query(createTableQuery);
     console.log('Projects table created successfully!');
-    
+
+    await pool.query(dedupeTitlesQuery);
+    await pool.query(createUniqueIndexQuery);
+
     // Insert sample data
     const insertQuery = `
       INSERT INTO projects (title, category, filter_type, description, image_url, size, technologies, live_link, github_link)
@@ -82,15 +97,25 @@ async function initDatabase() {
           'https://example.com',
           'https://github.com'
         )
-      ON CONFLICT DO NOTHING;
+      ON CONFLICT (title) DO UPDATE SET
+        category = EXCLUDED.category,
+        filter_type = EXCLUDED.filter_type,
+        description = EXCLUDED.description,
+        image_url = EXCLUDED.image_url,
+        size = EXCLUDED.size,
+        technologies = EXCLUDED.technologies,
+        live_link = EXCLUDED.live_link,
+        github_link = EXCLUDED.github_link,
+        updated_at = CURRENT_TIMESTAMP;
     `;
-    
+
     await pool.query(insertQuery);
     console.log('Sample data inserted successfully!');
   } catch (err) {
     console.error('Error initializing database:', err);
+    process.exitCode = 1;
   } finally {
-    process.exit(0);
+    await pool.end();
   }
 }
 
