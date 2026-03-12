@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Star, Link2, Share2, Code2 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { supabase, parseTechnologies } from '../lib/supabase';
 import './ProjectDetail.css';
 
 const ProjectDetail = () => {
@@ -64,7 +64,7 @@ const ProjectDetail = () => {
         );
     }
 
-    const tags = project.technologies || [];
+    const tags = parseTechnologies(project.technologies);
     const displayTags = tags.slice(0, 3);
     const extraTagsCount = tags.length > 3 ? tags.length - 3 : 0;
 

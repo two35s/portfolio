@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ExternalLink } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { supabase, parseTechnologies } from '../lib/supabase';
 import './PortfolioGrid.css';
 
 const PortfolioGrid = () => {
@@ -69,7 +69,7 @@ const PortfolioGrid = () => {
                 {!loading && !error && (
                     <div className="portfolio-grid">
                         {filteredProjects.map((project) => {
-                            const tags = project.technologies || [];
+                            const tags = parseTechnologies(project.technologies);
                             const displayTags = tags.slice(0, 3);
                             const extraTagsCount = tags.length > 3 ? tags.length - 3 : 0;
 

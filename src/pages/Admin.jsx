@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase, parseTechnologies } from '../lib/supabase';
 import { LogOut, Plus, Pencil, Trash2, Save, X, Loader2 } from 'lucide-react';
 import './Admin.css';
 
@@ -84,7 +84,7 @@ const Admin = () => {
   const startEdit = (project) => {
     setEditing(project.id);
     setForm({ ...project });
-    setTechInput((project.technologies || []).join(', '));
+    setTechInput(parseTechnologies(project.technologies).join(', '));
   };
 
   const cancelEdit = () => {
