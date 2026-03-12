@@ -105,6 +105,13 @@
     align-items: center;
 }
 
+.hero-visual-fallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: radial-gradient(circle at 30% 30%, rgba(212, 255, 54, 0.12), transparent 70%);
+}
+
 /* Animations */
 @keyframes slideUp {
     from {

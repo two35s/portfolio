@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { AnimatedThemeToggler } from './AnimatedThemeToggler';
+import { prefetchProjectsRoute } from '../lib/routePrefetch';
 import './Header.css';
 
 const Header = ({ theme, toggleTheme }) => {
@@ -24,6 +25,10 @@ const Header = ({ theme, toggleTheme }) => {
         setMobileMenuOpen(false);
     };
 
+    const handleProjectsIntent = () => {
+        prefetchProjectsRoute().catch(() => {});
+    };
+
     return (
         <header className={`header ${scrolled ? 'scrolled' : ''}`}>
             <div className="container header-content">
@@ -32,7 +37,15 @@ const Header = ({ theme, toggleTheme }) => {
                 </Link>
 
                 <nav id="primary-navigation" className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
-                    <Link to="/projects" onClick={() => setMobileMenuOpen(false)}>Projects</Link>
+                    <Link
+                        to="/projects"
+                        onMouseEnter={handleProjectsIntent}
+                        onFocus={handleProjectsIntent}
+                        onTouchStart={handleProjectsIntent}
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        Projects
+                    </Link>
                     <button type="button" className="nav-scroll-btn" onClick={() => scrollToSection('about')}>About</button>
                     <button type="button" className="nav-scroll-btn btn-primary-outline" onClick={() => scrollToSection('contact')}>Let's Talk</button>
                 </nav>

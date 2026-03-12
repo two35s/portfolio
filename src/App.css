@@ -4,3 +4,9 @@
   overflow: hidden;
   width: 100%;
 }
+
+.route-loading {
+  min-height: 40vh;
+  padding-top: 8rem;
+  color: var(--text-secondary);
+}

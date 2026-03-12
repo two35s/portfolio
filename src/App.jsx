@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { CursorifyProvider } from '@cursorify/react';
 import { PhingerCursor } from '@cursorify/cursors';
 import Header from './components/Header';
-import Home from './pages/Home';
-import Projects from './pages/Projects';
-import ProjectDetail from './pages/ProjectDetail';
-import AboutContact from './components/AboutContact';
 import ClickSpark from './components/ClickSpark';
 import './App.css';
+
+const Home = lazy(() => import('./pages/Home'));
+const Projects = lazy(() => import('./pages/Projects'));
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
+const AboutContact = lazy(() => import('./components/AboutContact'));
 
 function App() {
   const [theme, setTheme] = useState(() => {
@@ -32,12 +33,16 @@ function App() {
         <Router>
           <div className="app">
             <Header theme={theme} toggleTheme={toggleTheme} />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/projects/:id" element={<ProjectDetail />} />
-            </Routes>
-            <AboutContact />
+            <Suspense fallback={<main className="route-loading container">Loading...</main>}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/projects/:id" element={<ProjectDetail />} />
+              </Routes>
+            </Suspense>
+            <Suspense fallback={null}>
+              <AboutContact />
+            </Suspense>
           </div>
         </Router>
       </ClickSpark>
