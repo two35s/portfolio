@@ -39,6 +39,14 @@ const PortfolioGrid = () => {
         return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
     };
 
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+        e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+    };
+
     return (
         <section className="portfolio" id="work">
             <div className="container">
@@ -72,7 +80,12 @@ const PortfolioGrid = () => {
                             const extraTagsCount = tags.length > 3 ? tags.length - 3 : 0;
 
                             return (
-                                <Link key={project.id} to={`/projects/${project.id}`} className="project-card">
+                                <Link 
+                                    key={project.id} 
+                                    to={`/projects/${project.id}`} 
+                                    className="project-card"
+                                    onMouseMove={handleMouseMove}
+                                >
                                     <div className="project-image-wrapper">
                                         <img src={project.image_url} alt={project.title} loading="lazy" />
                                     </div>
