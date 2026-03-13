@@ -6,7 +6,7 @@ const Home = () => {
     return (
         <main>
             <Hero />
-            <PortfolioGrid />
+            <PortfolioGrid limit={3} />
         </main>
     );
 };

@@ -4,7 +4,7 @@ import { Star, ExternalLink } from 'lucide-react';
 import { supabase, parseTechnologies } from '../lib/supabase';
 import './PortfolioGrid.css';
 
-const PortfolioGrid = () => {
+const PortfolioGrid = ({ limit = null }) => {
     const [activeFilter, setActiveFilter] = useState('ALL');
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -19,6 +19,11 @@ const PortfolioGrid = () => {
                 if (activeFilter !== 'ALL') {
                     query = query.eq('filter_type', activeFilter);
                 }
+                
+                if (limit) {
+                    query = query.limit(limit);
+                }
+
                 const { data, error: dbError } = await query;
                 if (dbError) throw dbError;
                 setProjects(data || []);
@@ -31,7 +36,7 @@ const PortfolioGrid = () => {
         };
 
         fetchProjects();
-    }, [activeFilter]);
+    }, [activeFilter, limit]);
 
     const formatDate = (dateString) => {
         if (!dateString) return '';
@@ -73,50 +78,59 @@ const PortfolioGrid = () => {
                 {error && <p className="portfolio-status error">{error}</p>}
 
                 {!loading && !error && (
-                    <div className="portfolio-grid">
-                        {projects.map((project) => {
-                            const tags = parseTechnologies(project.technologies);
-                            const displayTags = tags.slice(0, 3);
-                            const extraTagsCount = tags.length > 3 ? tags.length - 3 : 0;
+                    <>
+                        <div className="portfolio-grid">
+                            {projects.map((project) => {
+                                const tags = parseTechnologies(project.technologies);
+                                const displayTags = tags.slice(0, 3);
+                                const extraTagsCount = tags.length > 3 ? tags.length - 3 : 0;
 
-                            return (
-                                <Link 
-                                    key={project.id} 
-                                    to={`/projects/${project.id}`} 
-                                    className="project-card"
-                                    onMouseMove={handleMouseMove}
-                                >
-                                    <div className="project-image-wrapper">
-                                        <img src={project.image_url} alt={project.title} loading="lazy" />
-                                    </div>
-                                    <div className="project-content">
-                                        <h3 className="project-title">{project.title}</h3>
-
-                                        <div className="project-tags">
-                                            {displayTags.map((tag, idx) => (
-                                                <span key={idx} className="project-tag">{tag}</span>
-                                            ))}
-                                            {extraTagsCount > 0 && (
-                                                <span className="project-tag extra">+{extraTagsCount}</span>
-                                            )}
+                                return (
+                                    <Link 
+                                        key={project.id} 
+                                        to={`/projects/${project.id}`} 
+                                        className="project-card"
+                                        onMouseMove={handleMouseMove}
+                                    >
+                                        <div className="project-image-wrapper">
+                                            <img src={project.image_url} alt={project.title} loading="lazy" />
                                         </div>
+                                        <div className="project-content">
+                                            <h3 className="project-title">{project.title}</h3>
 
-                                        <p className="project-description">{project.description}</p>
-
-                                        <div className="project-footer">
-                                            <div className="project-meta">
-                                                <span className="meta-item"><Star size={14} fill="currentColor" /> {project.category}</span>
-                                                {project.updated_at && <span className="meta-item">Updated {formatDate(project.updated_at)}</span>}
+                                            <div className="project-tags">
+                                                {displayTags.map((tag, idx) => (
+                                                    <span key={idx} className="project-tag">{tag}</span>
+                                                ))}
+                                                {extraTagsCount > 0 && (
+                                                    <span className="project-tag extra">+{extraTagsCount}</span>
+                                                )}
                                             </div>
-                                            <span className="project-view-btn">
-                                                View Project <ExternalLink size={14} />
-                                            </span>
+
+                                            <p className="project-description">{project.description}</p>
+
+                                            <div className="project-footer">
+                                                <div className="project-meta">
+                                                    <span className="meta-item"><Star size={14} fill="currentColor" /> {project.category}</span>
+                                                    {project.updated_at && <span className="meta-item">Updated {formatDate(project.updated_at)}</span>}
+                                                </div>
+                                                <span className="project-view-btn">
+                                                    View Project <ExternalLink size={14} />
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                        {limit && projects.length >= limit && (
+                            <div className="view-all-container">
+                                <Link to="/projects" className="view-all-link">
+                                    View All Projects <ExternalLink size={16} />
                                 </Link>
-                            );
-                        })}
-                    </div>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </section>
