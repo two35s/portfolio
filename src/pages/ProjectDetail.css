@@ -238,92 +238,221 @@
 /* ── Markdown Project Content ── */
 .project-detail-markdown {
     max-width: 720px;
-    margin: 3rem 0;
-    color: var(--text-secondary, #ccc);
+    margin: 3rem 0 0;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border-color, #222);
+    color: var(--text-secondary, #b0b0b0);
     font-size: 1rem;
-    line-height: 1.8;
+    line-height: 1.85;
 }
 
-.project-detail-markdown h1,
-.project-detail-markdown h2,
-.project-detail-markdown h3 {
+/* Headings */
+.project-detail-markdown h1 {
+    font-size: 1.75rem;
     color: var(--text-primary, #fff);
-    margin-top: 2.5rem;
-    margin-bottom: 0.75rem;
+    margin: 2.5rem 0 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+.project-detail-markdown h2 {
+    font-size: 1.35rem;
+    color: var(--text-primary, #fff);
+    margin: 2.5rem 0 0.75rem;
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color, #222);
+}
+.project-detail-markdown h3 {
+    font-size: 1.1rem;
+    color: var(--text-primary, #fff);
+    margin: 2rem 0 0.5rem;
+    font-weight: 600;
+}
+.project-detail-markdown h4,
+.project-detail-markdown h5,
+.project-detail-markdown h6 {
+    color: var(--text-primary, #fff);
+    margin: 1.5rem 0 0.5rem;
     font-weight: 600;
 }
 
-.project-detail-markdown h2 { font-size: 1.4rem; }
-.project-detail-markdown h3 { font-size: 1.15rem; }
-
+/* Paragraphs */
 .project-detail-markdown p {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.25rem;
 }
 
+/* Lists */
 .project-detail-markdown ul,
 .project-detail-markdown ol {
-    padding-left: 1.5rem;
-    margin-bottom: 1.2rem;
+    padding-left: 1.75rem;
+    margin-bottom: 1.25rem;
 }
-
 .project-detail-markdown li {
+    margin-bottom: 0.5rem;
+}
+.project-detail-markdown li > ul,
+.project-detail-markdown li > ol {
+    margin-top: 0.4rem;
     margin-bottom: 0.4rem;
 }
 
-.project-detail-markdown code {
-    background: #1a1a1a;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: monospace;
-    font-size: 0.9em;
-    color: #cbf74e;
+/* Task list (GFM) */
+.project-detail-markdown ul.contains-task-list {
+    list-style: none;
+    padding-left: 0.25rem;
+}
+.project-detail-markdown .task-list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+}
+.project-detail-markdown .task-list-item input[type='checkbox'] {
+    margin-top: 0.35rem;
+    accent-color: #cbf74e;
+    flex-shrink: 0;
 }
 
+/* Inline code */
+.project-detail-markdown code {
+    background: rgba(203, 247, 78, 0.1);
+    padding: 0.15em 0.45em;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.88em;
+    color: #cbf74e;
+    white-space: nowrap;
+}
+
+/* Code blocks (react-syntax-highlighter renders its own pre/code,
+   these rules only apply if plain fenced blocks fall through) */
 .project-detail-markdown pre {
     background: #111;
-    border: 1px solid var(--border-color, #222);
+    border: 1px solid rgba(255,255,255,0.08);
     border-radius: 8px;
-    padding: 1rem;
+    padding: 1.1rem 1.25rem;
     overflow-x: auto;
-    margin-bottom: 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
 }
-
 .project-detail-markdown pre code {
     background: none;
     padding: 0;
     color: #cbf74e;
+    white-space: pre;
+    font-size: inherit;
 }
 
+/* Blockquote */
 .project-detail-markdown blockquote {
+    margin: 1.5rem 0;
+    padding: 0.85rem 1.25rem;
     border-left: 3px solid #cbf74e;
-    margin: 0 0 1.2rem;
-    padding: 0.5rem 1rem;
-    color: #888;
+    background: rgba(203, 247, 78, 0.04);
+    border-radius: 0 6px 6px 0;
+    color: var(--text-secondary, #999);
     font-style: italic;
 }
-
-.project-detail-markdown a {
-    color: #cbf74e;
-    text-decoration: underline;
+.project-detail-markdown blockquote p {
+    margin-bottom: 0;
 }
 
+/* Horizontal rule */
 .project-detail-markdown hr {
     border: none;
     border-top: 1px solid var(--border-color, #222);
-    margin: 2rem 0;
+    margin: 2.5rem 0;
 }
 
+/* Links */
+.project-detail-markdown a {
+    color: #cbf74e;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: opacity 0.15s;
+}
+.project-detail-markdown a:hover {
+    opacity: 0.75;
+}
+
+/* Tables (GFM) */
+.project-detail-markdown table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.75rem 0;
+    font-size: 0.9rem;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #222);
+}
+.project-detail-markdown thead {
+    background: rgba(255,255,255,0.04);
+}
+.project-detail-markdown th {
+    text-align: left;
+    padding: 0.7rem 1rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-primary, #fff);
+    border-bottom: 1px solid var(--border-color, #222);
+}
+.project-detail-markdown td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--text-secondary, #aaa);
+}
+.project-detail-markdown tbody tr:last-child td {
+    border-bottom: none;
+}
+.project-detail-markdown tbody tr:hover {
+    background: rgba(255,255,255,0.02);
+}
+
+/* Strikethrough (GFM) */
+.project-detail-markdown del {
+    opacity: 0.5;
+}
+
+/* Images inside markdown */
+.md-image {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    display: block;
+    border: 1px solid var(--border-color, #222);
+}
+
+/* ── Light mode overrides ── */
+[data-theme='light'] .project-detail-markdown {
+    color: #444;
+}
 [data-theme='light'] .project-detail-markdown code {
-    background: #f0f4e8;
+    background: #f0f5e0;
     color: #3d6b00;
 }
-
 [data-theme='light'] .project-detail-markdown pre {
     background: #f7f9f2;
     border-color: #dde;
 }
-
 [data-theme='light'] .project-detail-markdown pre code {
     background: none;
     color: #3d6b00;
 }
+[data-theme='light'] .project-detail-markdown blockquote {
+    background: rgba(61, 107, 0, 0.05);
+}
+[data-theme='light'] .project-detail-markdown thead {
+    background: rgba(0,0,0,0.03);
+}
+[data-theme='light'] .project-detail-markdown td {
+    border-bottom-color: rgba(0,0,0,0.06);
+}
+[data-theme='light'] .project-detail-markdown tbody tr:hover {
+    background: rgba(0,0,0,0.02);
+}
+[data-theme='light'] .md-image {
+    border-color: #dde;
+}
+

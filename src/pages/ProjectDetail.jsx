@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Star, Link2, Share2, Code2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { supabase, parseTechnologies } from '../lib/supabase';
 import './ProjectDetail.css';
 
@@ -163,7 +166,55 @@ const ProjectDetail = () => {
 
                     {project.content && (
                         <div className="project-detail-markdown">
-                            <ReactMarkdown>{project.content}</ReactMarkdown>
+                            <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                    code({ node, inline, className, children, ...props }) {
+                                        const match = /language-(\w+)/.exec(className || '');
+                                        return !inline && match ? (
+                                            <SyntaxHighlighter
+                                                style={oneDark}
+                                                language={match[1]}
+                                                PreTag="div"
+                                                customStyle={{
+                                                    borderRadius: '8px',
+                                                    fontSize: '0.875rem',
+                                                    margin: '1.5rem 0',
+                                                    border: '1px solid rgba(255,255,255,0.08)',
+                                                }}
+                                                codeTagProps={{ style: { fontFamily: 'inherit' } }}
+                                                {...props}
+                                            >
+                                                {String(children).replace(/\n$/, '')}
+                                            </SyntaxHighlighter>
+                                        ) : (
+                                            <code className={className} {...props}>
+                                                {children}
+                                            </code>
+                                        );
+                                    },
+                                    a({ href, children, ...props }) {
+                                        return (
+                                            <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+                                                {children}
+                                            </a>
+                                        );
+                                    },
+                                    img({ src, alt, ...props }) {
+                                        return (
+                                            <img
+                                                src={src}
+                                                alt={alt}
+                                                className="md-image"
+                                                loading="lazy"
+                                                {...props}
+                                            />
+                                        );
+                                    },
+                                }}
+                            >
+                                {project.content}
+                            </ReactMarkdown>
                         </div>
                     )}
                 </article>
