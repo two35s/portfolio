@@ -4,6 +4,7 @@ import { CursorifyProvider } from '@cursorify/react';
 import { PhingerCursor } from '@cursorify/cursors';
 import Header from './components/Header';
 import ClickSpark from './components/ClickSpark';
+import Intro from './components/Intro';
 import './App.css';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -16,11 +17,22 @@ const Admin = lazy(() => import('./pages/Admin'));
 function AppContent({ theme, toggleTheme }) {
   const location = useLocation();
   const isAdmin = location.pathname === '/admin';
+  const [showIntro, setShowIntro] = useState(() => {
+    // Only show intro on home page and if not seen in current session
+    return location.pathname === '/' && !sessionStorage.getItem('yb_intro_seen');
+  });
+
   const sparkColor = theme === 'dark' ? '#d4ff36' : '#9bbf00';
+
+  const handleIntroDone = () => {
+    sessionStorage.setItem('yb_intro_seen', 'true');
+    setShowIntro(false);
+  };
 
   return (
     <ClickSpark sparkColor={sparkColor} sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
       <div className="app">
+        {showIntro && <Intro onDone={handleIntroDone} />}
         {!isAdmin && <Header theme={theme} toggleTheme={toggleTheme} />}
         <Suspense fallback={<main className="route-loading container">Loading...</main>}>
           <Routes>

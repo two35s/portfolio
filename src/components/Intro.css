@@ -1,0 +1,132 @@
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: #080808;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.intro-overlay.exit {
+  transform: translateY(-100%);
+}
+
+.intro-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.intro-letters {
+  display: flex;
+  align-items: center;
+  font-size: 5rem;
+  font-weight: 800;
+  overflow: hidden;
+  line-height: 1;
+}
+
+.intro-letters span {
+  display: inline-block;
+  transform: translateY(100%);
+  animation: reveal-letter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.intro-letters span:nth-child(1) { animation-delay: 0.2s; }
+.intro-letters span:nth-child(2) { animation-delay: 0.4s; color: #c8ff00; margin: 0 0.5rem; }
+.intro-letters span:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes reveal-letter {
+  to { transform: translateY(0); }
+}
+
+.intro-subtitle {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  color: #a1a1aa;
+  opacity: 0;
+  animation: fade-in 1s ease forwards 1s;
+}
+
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+
+.intro-progress-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.intro-progress-bar {
+  height: 100%;
+  background: #c8ff00;
+  width: 0%;
+  animation: progress-width 2.8s linear forwards;
+}
+
+@keyframes progress-width {
+  to { width: 100%; }
+}
+
+.intro-counter {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  font-family: 'Inter', monospace;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+.intro-skip {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  background: none;
+  border: none;
+  color: #52525b;
+  cursor: pointer;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.intro-skip:hover {
+  color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-letters span,
+  .intro-subtitle,
+  .intro-overlay {
+    animation: none;
+    transform: none;
+    transition: none;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-letters {
+    font-size: 3rem;
+  }
+  .intro-subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+  }
+}
