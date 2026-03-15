@@ -6,6 +6,9 @@ import './AboutContact.css';
 
 const AboutContact = () => {
     const containerRef = useRef(null);
+    const emailUser = "youssefbaaziz2077";
+    const emailDomain = "gmail.com";
+    const fullEmail = `${emailUser}@${emailDomain}`;
 
     return (
         <section className="about-contact" id="contact">
@@ -25,8 +28,8 @@ const AboutContact = () => {
                                 falloff='linear'
                             />
                         </h2>
-                        <a href="mailto:youssefbaaziz2077@gmail.com" className="email-link">
-                            youssefbaaziz2077@gmail.com
+                        <a href={`mailto:${fullEmail}`} className="email-link">
+                            {fullEmail}
                         </a>
                     </div>
 
@@ -34,7 +37,7 @@ const AboutContact = () => {
                         <div className="social-links">
                             <a href="https://github.com/two35s" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github size={24} /></a>
                             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin size={24} /></a>
-                            <a href="mailto:youssefbaaziz2077@gmail.com" aria-label="Email"><Mail size={24} /></a>
+                            <a href={`mailto:${fullEmail}`} aria-label="Email"><Mail size={24} /></a>
                         </div>
                         <p className="copyright">&copy; {new Date().getFullYear()} Y/B Design. All rights reserved. <Link to="/admin" style={{ opacity: 0.2, fontSize: '0.7rem', textDecoration: 'none', color: 'inherit' }}>admin</Link></p>
                     </div>

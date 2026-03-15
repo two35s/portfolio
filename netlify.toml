@@ -1,0 +1,16 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=()"
+    # Comprehensive Content Security Policy (CSP)
+    # Includes Supabase and common external image/media sources
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://cbblnjbdzazaxfkuufit.supabase.co https://*.supabase.co; font-src 'self' data: https:; frame-src 'self'; object-src 'none'; media-src 'self' https:;"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
