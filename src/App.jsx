@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CursorifyProvider } from '@cursorify/react';
 import { PhingerCursor } from '@cursorify/cursors';
 import Header from './components/Header';
