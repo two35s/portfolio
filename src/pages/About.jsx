@@ -17,21 +17,30 @@ const About = () => {
                 <div className="about-grid">
                     <section className="about-main">
                         <div className="about-bio">
-                            <h2 className="about-subtitle">Designer, Creator, Strategist</h2>
+                            <h2 className="about-subtitle">Graphic Designer & Brand Identity Specialist</h2>
                             <p>
-                                I am a multi-disciplinary designer with a passion for building digital experiences that are as functional as they are beautiful. With over 5 years of experience in brand identity, packaging, and digital design, I bring a holistic approach to every project.
+                                I'm Youssef Baaziz, a Graphic Designer and Brand Identity Specialist based in Agadir, Morocco. I help businesses build visual identities that are consistent, strategic, and built to last — from logo systems and social media content to fully responsive websites.
                             </p>
                             <p>
-                                My design philosophy is rooted in simplicity and strategic thinking. I believe that good design isn't just about how it looks, but about how it communicates and solves problems. Every pixel and every choice should serve a purpose.
+                                I've worked with food brands, creative studios, and startups across Morocco, delivering design that drives real results. My approach combines creative intuition with strategic thinking to create brands that stand the test of time.
                             </p>
                             <p>
-                                When I'm not designing, you can find me exploring typography, visiting art galleries, or experimenting with analog photography. I'm constantly seeking new ways to blend art and technology.
+                                Alongside design, I bring a background in cybersecurity — vulnerability research, penetration testing, and offensive tooling — making me uniquely suited for clients who need both creative and technical thinking. If you're looking for a designer who understands systems as deeply as aesthetics, let's work together.
                             </p>
                         </div>
 
                         <div className="about-experience">
                             <h2 className="about-subtitle">Experience</h2>
                             <div className="experience-list">
+                                <div className="experience-item">
+                                    <div className="exp-meta">
+                                        <Briefcase size={16} />
+                                        <span className="exp-company">creation.agence</span>
+                                        <span className="exp-period">2025 — Present</span>
+                                    </div>
+                                    <h3 className="exp-role">Co-Founder & Art Director</h3>
+                                    <p>Co-founded a full-service creative agency based in Agadir, offering branding, web design, social media, and advertising for local SMBs and startups. Leading the creative direction and visual identity across all client projects.</p>
+                                </div>
                                 <div className="experience-item">
                                     <div className="exp-meta">
                                         <Briefcase size={16} />
@@ -44,11 +53,29 @@ const About = () => {
                                 <div className="experience-item">
                                     <div className="exp-meta">
                                         <Briefcase size={16} />
-                                        <span className="exp-company">Creative Agency X</span>
-                                        <span className="exp-period">2019 — 2021</span>
+                                        <span className="exp-company">Chicko's</span>
+                                        <span className="exp-period">Dec 2025 - Jan 2026 · 2 mos</span>
                                     </div>
-                                    <h3 className="exp-role">Senior Brand Designer</h3>
-                                    <p>Developed comprehensive brand identities and digital assets for international clients.</p>
+                                    <h3 className="exp-role">Social Media Designer</h3>
+                                    <p>Designed Instagram-native content (posts & stories) for a food brand, maintaining strict visual identity consistency. Adapted designs to current platform trends and formats while collaborating with the team to grow the brand's digital presence.</p>
+                                </div>
+                                <div className="experience-item">
+                                    <div className="exp-meta">
+                                        <Briefcase size={16} />
+                                        <span className="exp-company">Sushi Fleur de ming</span>
+                                        <span className="exp-period">Nov 2025 - Jan 2026 · 3 mos</span>
+                                    </div>
+                                    <h3 className="exp-role">Graphic Designer & Web Designer</h3>
+                                    <p>Designed Instagram-native content (posts & stories) for a food brand, maintaining strict visual identity consistency. Adapted designs to current plLed the full visual identity and web presence of the brand. Designed social media visuals, marketing materials, and built the brand's website (WordPress, responsive/UI-UX). Ensured visual consistency across branding, digital, and communication channels.</p>
+                                </div>
+                                <div className="experience-item">
+                                    <div className="exp-meta">
+                                        <Briefcase size={16} />
+                                        <span className="exp-company">Maghreb Passion</span>
+                                        <span className="exp-period">Apr 2025 - Nov 2025 · 8 mos</span>
+                                    </div>
+                                    <h3 className="exp-role">Graphic Designer</h3>
+                                    <p>Contributed to visual design projects across brand and marketing materials for a Moroccan creative studio.</p>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +122,7 @@ const About = () => {
                             <div className="details-list">
                                 <div className="detail-item">
                                     <MapPin size={16} />
-                                    <span>Based in Morocco</span>
+                                    <span>Based in Agadir, Morocco</span>
                                 </div>
                                 <div className="detail-item">
                                     <Calendar size={16} />
